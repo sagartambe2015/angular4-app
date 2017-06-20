@@ -18,6 +18,8 @@ import { HeroSearchComponent }  from './hero-search.component';
 import { BlogComponent }  from './blog/blog.component';
 import { BlogService }    from './blog/blog.service';
 
+import { MyApp } from './myapp';
+
 @NgModule({
   imports: [
     BrowserModule,
@@ -32,7 +34,8 @@ import { BlogService }    from './blog/blog.service';
     HeroDetailComponent,
     HeroesComponent,
     HeroSearchComponent,
-    BlogComponent
+    BlogComponent,
+    MyApp
   ],
   providers: [ HeroService,BlogService ],
   bootstrap: [ AppComponent ]

@@ -4,33 +4,41 @@ import { Router }            from '@angular/router';
 import { Blog }                from './blog';
 import { BlogService }         from './blog.service';
 
+import { Observable }        from 'rxjs/Observable';
+import { Subject }           from 'rxjs/Subject';
+// Observable class extensions
+import 'rxjs/add/observable/of';
+
+// Observable operators
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/distinctUntilChanged';
+
+
 @Component({
   selector: 'my-heroes',
   templateUrl: './blog.component.html',
   styleUrls: [ './blog.component.css' ]
 })
 export class BlogComponent implements OnInit {
-  blogs: Blog[];
+  blogs: Observable<Blog[]>;
   selectedBlog: Blog;
+  private searchTerms = new Subject<Blog>();
 
   constructor(
     private blogService: BlogService,
     private router: Router) { }
 
   getBlogs(): void {
-    this.blogs = this.blogService
-        .getBlogs();
+     
     
   }
 
-  add(blogHeader: string,blogText: string): void {
-    console.log("Inserted Blog....."+blogHeader);
-
-    this.selectedBlog = new Blog();
-    this.selectedBlog.blogHeader = blogHeader;
-    this.selectedBlog.blogText = blogText;
-    this.blogService.create(this.selectedBlog);    
-    this.getBlogs();    
+  add(blog :Blog): void {
+    console.log("Inserted Blog....."+blog.blogText  );
+    
+    
+    
   }
 
   delete(hero: Blog): void {
@@ -44,6 +52,22 @@ export class BlogComponent implements OnInit {
 
   ngOnInit(): void {
     this.getBlogs();
+    this.selectedBlog = new Blog();
+
+    // this.blogs = this.searchTerms
+    //   .debounceTime(300)        // wait 300ms after each keystroke before considering the term
+    //   .distinctUntilChanged()   // ignore if next search term is same as previous
+    //   .switchMap(term => term   // switch to new observable each time the term changes
+    //     // return the http search observable
+    //     ? this.blogService.getBlogs()
+    //     // or the observable of empty heroes if there was no search term
+    //     : Observable.of<Blog[]>([]))
+    //   .catch(error => {
+    //     // TODO: add real error handling
+    //     console.log(error);
+    //     return Observable.of<Blog[]>([]);
+    //   });
+
   }
 
   onSelect(hero: Blog): void {

@@ -4,11 +4,13 @@
       <h2>Blogger Form</h2>
       <form>
         <div class="form-group">
+          
+
           <label for="header">Blog Header:</label>
-          <input #blogHeader />
+          <input type="text" id="message" [(ngModel)]="selectedBlog.blogHeader" name="blogHeader"/>
           <label for="header">Blog Content:</label>
-          <input #blogText />
-          <button (click)="add(blogHeader.value,blogText.value);">
+          <input [(ngModel)]="selectedBlog.blogText" name="blogText">
+          <button (click)="add(selectedBlog);">
             Add
           </button>
         </div>
